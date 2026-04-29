@@ -1,14 +1,14 @@
 # NextEra Energy (NEE) — DCF Model
 
-A Python-based discounted cash flow model for NextEra Energy, the largest regulated utility and renewable energy operator in North America. The script pulls live financial and market data with yfinance, builds a 5-year projection, calculates WACC from first principles, and exports a formatted, print-ready Excel workbook with a sensitivity table and full assumptions log.
+I created a Python-based DCF model for NextEra Energy (NEE), which is currently the largest regulated renewable energy corporation in North America. This script pulls live data with yfinance, builds a 5-year projection, calculates WACC from scratch, and exports a neat Excel workbook with separate sheets for sensitivity and full assumptions.
 
 ---
 
 ## Methodology
 
-### Free Cash Flow Proxy
+### Free Cash Flow Note
 
-Standard yfinance FCF (Operating CF − Capex) materially understates NEE's economic earnings because the company deploys $9B+ per year in growth capex to build regulated-return assets. That capex is not a drain on value — it creates rate base that generates future regulated revenue. Using reported FCF would penalize the company for its own growth.
+NOTE: Used Standard yfinance for free cash flow (Operating CF − Capex), which heavily understates NEE's economic earnings because the company spends $9B+ per year in capital expidentures to build regulated return assets. Using reported free cash flow would penalize the company for its own growth, so I used NOPAT.
 
 Instead, the model uses **NOPAT as the FCF proxy**:
 
@@ -16,11 +16,11 @@ Instead, the model uses **NOPAT as the FCF proxy**:
 NOPAT = EBIT × (1 − Effective Tax Rate)
 ```
 
-This normalizes for growth capex and is internally consistent with the revenue growth projections — new capital deployed generates new revenue, and the EBIT margin assumptions capture the earnings from those assets.
+It normalizes for capex (capital expidentures) and is much more consistent with the revenue growth projections — new deployed capital generates new revenue, and the EBIT margin assumptions implement the earnings from those assets instead.
 
 ### WACC
 
-WACC is built from market and financial data sourced at runtime:
+WACC is built from market data using (Weight of Equity × Cost of Equity) + (Weight of Debt × Cost of Debt × (1 - Tax Rate))
 
 ```
 Ke = Risk-Free Rate + β × Equity Risk Premium   (CAPM)
@@ -35,17 +35,17 @@ WACC = Ke × We + Kd × (1 − t) × Wd
 | Beta | Live | Yahoo Finance (5-yr monthly) |
 | Effective Tax Rate | Live | 2-year avg from income statement |
 
-NEE's low beta (~0.5–0.7) reflects its regulated utility earnings base, compressing the cost of equity relative to pure-play renewables.
+NEE's low beta (~0.5–0.7) reflects its regulated utility earnings base; compresseswha cost of equity relative to pure-play renewables.
 
 ### DCF & Terminal Value
 
-Cash flows are discounted at WACC using a 5-year explicit forecast period. Terminal value uses the **Gordon Growth Model**:
+Cash flows are discounted with WACC formula using a 5-year forecast period, using **Gordon Growth Model**:
 
 ```
 TV = NOPAT₅ × (1 + g) / (WACC − g)
 ```
 
-With a terminal growth rate of **3.0%**, anchored to long-run US GDP growth — consistent with a regulated utility whose revenue is tied to rate case outcomes and load growth rather than cyclical earnings.
+Uses terminal growth rate of **3.0%**, (anchored to US long term GDP growth)
 
 ### Revenue Growth Assumptions
 
@@ -55,7 +55,7 @@ With a terminal growth rate of **3.0%**, anchored to long-run US GDP growth — 
 | 3–4 | 7% | Step-down as rate base additions normalize |
 | 5 | 6% | Converging toward long-run growth |
 
-EBIT margins are projected to expand modestly toward **34%**, within NEE's historical 30–36% range, reflecting operating leverage from its growing regulated asset base.
+EBIT margins projected to expand toward **34%**, within NEE's historical 30–36% range, showing operating leverage from its growing regulated asset base.s
 
 ---
 
@@ -63,7 +63,7 @@ EBIT margins are projected to expand modestly toward **34%**, within NEE's histo
 
 The script produces a three-sheet Excel workbook:
 
-- **DCF Summary** — historical financials (3 years), 5-year projections, valuation bridge (EV → equity value → implied share price vs. current price), and full WACC build
+- **DCF Summary** — historical financials (3 years), 5-year projections, valuation bridge (EV → equity value → implied share price vs. current price), and full WACC 
 - **Sensitivity Analysis** — implied share price grid across 5 WACC scenarios (±200 bps) and 7 terminal growth rates (1.0%–4.0%), with red-yellow-green conditional formatting
 - **Assumptions** — all model parameters with methodology notes, suitable for documentation or review
 
@@ -71,16 +71,16 @@ The script produces a three-sheet Excel workbook:
 
 ## Key Observations
 
-- **NOPAT consistently exceeds reported FCF** for NEE because growth capex (new wind, solar, and transmission assets) is economically productive rather than value-destructive — reported FCF is not a reliable valuation anchor for regulated utilities with active capital programs.
-- **Terminal value dominates the DCF**, as it does for most stable, capital-intensive businesses. The sensitivity table makes this explicit: WACC and TGR assumptions matter far more than near-term revenue projections.
-- **NEE's low beta compresses WACC** relative to its peers in the renewables universe, a direct consequence of its regulated Florida Power & Light earnings base, which provides stable, recession-resistant cash flows that reduce equity risk.
+- **NOPAT consistently exceeds reported FCF** for NEE because growth capex (new wind, solar, etc) is productive rather than value-destructive — reported FCF not a reliable anchor for regulated utilities.
+- **Terminal value dominates the DCF**, as it does for most stable/capital-intensive businesses. The sensitivity table makes this explicit: WACC and TGR assumptions matter far more than near-term projections
+- **NEE's low beta compresses WACC** relative to peers in the renewables environment, a direct consequence of its regulated Florida Power & Light earnings base, which provides stable, recession-resistant cash flows that reduce equity risk.
 - **ITC/PTC tax credits** keep NEE's effective tax rate below the statutory rate, which flows through to a lower WACC (via higher after-tax NOPAT) and higher implied equity value — a structural advantage for regulated utilities with large renewables pipelines.
 
 ---
 
 ## Data Source
 
-All financial and market data is sourced from **Yahoo Finance via the yfinance library**. Historical income statement and balance sheet data is pulled for the three most recent fiscal years. Select figures (shares outstanding, current price, beta) are sourced from the yfinance `info` object and reflect the most recent available values at runtime.
+All data (financial/market) is from **Yahoo Finance via the yfinance library**. Historical income statement and balance sheet data is pulled for the past 3 fiscal years. Select figures (shares outstanding, current price, beta) are sourced from the yfinance `info` object and reflect the most recent available values at runtime.
 
 ---
 
