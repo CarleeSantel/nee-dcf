@@ -71,7 +71,7 @@ The script produces a three-sheet Excel workbook:
 
 ## Key Observations
 
-- **NOPAT consistently exceeds reported FCF** for NEE because growth capital expedentures (new wind, solar, etc) is productive rather than destructive to company value — reported FCF not a reliable anchor for regulated utilities.
+- **NOPAT consistently exceeds reported FCF** for NEE because growth capital expedentures (new wind, solar, etc) is productive rather than destructive to company value — reported FCF not a good anchor for regulated utilities.
 - **Terminal value dominates the DCF**, as it does for most stable/capital-heavy businesses. The sensitivity table makes this explicit: WACC and TGR assumptions matter far more than near-term projections
 - **NEE's low beta compresses WACC** relative to peers in the renewables environment, a direct consequence of its regulated Florida Power & Light earnings base, which provides stable, recession-resistant cash flows that reduce equity risk.
 - **ITC/PTC tax credits** keep NEE's effective tax rate below the statutory rate, which flows through to a lower WACC (via higher after-tax NOPAT) and higher implied equity value — a structural advantage for regulated utilities with large renewables pipelines.
@@ -80,7 +80,7 @@ The script produces a three-sheet Excel workbook:
 
 ## Data Source
 
-All data (financial/market) is from **Yahoo Finance via the yfinance library**. Historical statement and balance sheet data is pulled for the past 3 fiscal years. Select figures (shares outstanding, current price, beta) are sourced from yfinance `info` object and reflect most recent values.
+Data (financial/market) is from **Yahoo Finance via the yfinance library**. Historical statement and balance sheet data is pulled for the past 3 fiscal years. Select figures (shares outstanding, current price, beta) are sourced from yfinance `info` object and reflect most recent values.
 
 ---
 
