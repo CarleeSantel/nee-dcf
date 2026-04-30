@@ -1,6 +1,6 @@
 # NextEra Energy (NEE) — DCF Model
 
-I created a Python-based DCF model for NextEra Energy (NEE), which is currently the largest regulated renewable energy corporation in North America. This again goes along with the common theme in the financials of renewable energy and why corporations and governments are so hesistant to move towards it, as upfront costs are significant but long term investments are typically successful. Script pulls data with yfinance, builds a 5-year projection, calculates WACC from scratch, and exports a neat Excel workbook with separate sheets for sensitivity and full assumptions.
+I created a DCF model for NextEra Energy (NEE), which is currently the largest regulated renewable energy corporation in North America. This again goes along with the common theme in the financials of renewable energy and why corporations and governments are so hesistant to move towards it, as upfront costs are significant but necessary in the long term. Script pulls data with yfinance, builds a 5-year projection, calculates WACC from scratch, and exports a neat Excel workbook with separate sheets for sensitivity and full assumptions.
 
 ---
 
@@ -16,7 +16,7 @@ Instead model uses **NOPAT as the FCF proxy**:
 NOPAT = EBIT × (1 − Effective Tax Rate)
 ```
 
-It normalizes for capital expedentures annd is much more consistent with the revenue growth projections. the new capital generates new revenue and the EBIT margin assumptions account for those assets instead.
+It normalizes for capital expenditures annd is much more consistent with the revenue growth projections. the new capital generates new revenue and the EBIT margin assumptions account for those assets instead.
 
 ### WACC
 
@@ -71,7 +71,7 @@ The script produces a three-sheet Excel workbook:
 
 ## Key Observations
 
-- **NOPAT consistently exceeds reported FCF** for NEE because growth capital expedentures (new wind, solar, etc) is productive rather than destructive to value.
+- **NOPAT consistently exceeds reported FCF** for NEE because growth capital expenditures (new wind, solar, etc) is productive rather than destructive to value.
 - **Terminal value dominates the DCF**, like it does for most stable/capital-heavy businesses, and  the sensitivity table mshows this: WACC and TGR assumptions matter far more 
 - **NEE's low beta compresses WACC** relative to other renewables corporations, a direct consequence of its Florida Power & Light earnings base. this base is what gives stable, recession-resistant cash flows, that also reduce equity risk.
 - **ITC/PTC tax credits** keep NEE's effective tax rate below the statutory rate, which flows through to a lower WACC (via higher after-tax NOPAT) and higher implied equity value — a structural advantage for regulated utilities with large renewables pipelines.
@@ -80,7 +80,7 @@ The script produces a three-sheet Excel workbook:
 
 ## Data Source
 
-Data (financial/market) is from **Yahoo Finance via the yfinance library**. Historical statement and balance sheet data is pulled for the past 3 fiscal years. Select figures (shares outstanding, current price, beta) are sourced from yfinance `info` object and reflect most recent values.
+Data (financial/market) is **Yahoo Finance via the yfinance library**. statement and balance sheet data is pulled for past 3 fiscal years. some of the figures (shares outstanding, current price, beta) are from yfinance `info` and show the most recent data.
 
 ---
 
@@ -101,4 +101,4 @@ pip3 install -r ../requirements.txt
 python3 nee_dcf.py
 ```
 
-The script will print a console summary of inputs and outputs (price, WACC, implied value, upside/downside) and save `NEE_DCF_Model.xlsx` to the working directory.
+script prints a console summary of inputs and outputs (price, WACC, implied value, upside/downside) and save `NEE_DCF_Model.xlsx` to working directory
