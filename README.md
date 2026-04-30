@@ -8,9 +8,9 @@ I created a Python-based DCF model for NextEra Energy (NEE), which is currently 
 
 ### Free Cash Flow Note
 
-NOTE: Used Standard yfinance for free cash flow (Operating CF − Capex), however it understates NEE's economic earnings because the company spends $9B+ per year in capital expidentures to build regulated return assets.
+Used yfinance for fcf (Operating CF − Capex), but it understates NEE's earnings because the company spends over $9 billion per year in capex to build regulated return assets.
 
-Instead, model uses **NOPAT as the FCF proxy**:
+Instead model uses **NOPAT as the FCF proxy**:
 
 ```
 NOPAT = EBIT × (1 − Effective Tax Rate)
@@ -64,16 +64,16 @@ EBIT margins projected to expand toward **34%**, within NEE's historical 30–36
 The script produces a three-sheet Excel workbook:
 
 - **DCF Summary** — financial histories for 3 years,, 5-year projections (valuation from enterprise value-subtract debt-add back cash-get equity value-divide by shares outstanding-compare to current market price
-- **Sensitivity Analysis** — implied share price grid across 5 WACC scenarios (±200 basis points) and 7 terminal growth rates (1.0%–4.0%), with red-yellow-green indicators
+- **Sensitivity Analysis** — implied share price across 5 WACC scenariosand 7 terminal growth rates (1.0%–4.0%), with red-yellow-green indicators
 - **Assumptions** — all model parameters with methodology notes, suitable for documentation or review
 
 ---
 
 ## Key Observations
 
-- **NOPAT consistently exceeds reported FCF** for NEE because growth capital expedentures (new wind, solar, etc) is productive rather than destructive to company value — reported FCF not a good anchor for regulated utilities.
-- **Terminal value dominates the DCF**, as it does for most stable/capital-heavy businesses. The sensitivity table makes this explicit: WACC and TGR assumptions matter far more than near-term projections
-- **NEE's low beta compresses WACC** relative to peers in the renewables environment, a direct consequence of its regulated Florida Power & Light earnings base, which provides stable, recession-resistant cash flows that reduce equity risk.
+- **NOPAT consistently exceeds reported FCF** for NEE because growth capital expedentures (new wind, solar, etc) is productive rather than destructive to value.
+- **Terminal value dominates the DCF**, like it does for most stable/capital-heavy businesses, and  the sensitivity table mshows this: WACC and TGR assumptions matter far more 
+- **NEE's low beta compresses WACC** relative to other renewables corporations, a direct consequence of its Florida Power & Light earnings base. this base is what gives stable, recession-resistant cash flows, that also reduce equity risk.
 - **ITC/PTC tax credits** keep NEE's effective tax rate below the statutory rate, which flows through to a lower WACC (via higher after-tax NOPAT) and higher implied equity value — a structural advantage for regulated utilities with large renewables pipelines.
 
 ---
